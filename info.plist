@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>cc.dozer.unifiedconverter</string>
+	<string>cc.dozer.hasher</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -27,7 +27,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Unified Converter</string>
+	<string>Hasher</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -38,7 +38,7 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>uc</string>
+				<string>h</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
