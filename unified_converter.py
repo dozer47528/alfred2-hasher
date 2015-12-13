@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from model.Base64 import Base64
 from model.DateTime import DateTime
 from model.MD5 import MD5
 from workflow import Workflow
@@ -7,7 +8,7 @@ from workflow import Workflow
 class UnifiedConverter:
     def __init__(self):
         self.wf = Workflow()
-        self.models = [MD5(), DateTime()]
+        self.models = [MD5(), DateTime(), Base64()]
         self.modelDict = dict()
         for m in self.models:
             self.modelDict[m.name] = m
