@@ -1,17 +1,10 @@
-not finished!
+# Alfred2 Hasher
+-----------------------
 
-uc ->
-show:
-    help xxx
-    md5 xxx
-    timestamp2xxx
-    hash xxx
-    hex2xxx
+[![Build Status](https://travis-ci.org/dozer47528/alfred2-hasher.svg?branch=master)](https://travis-ci.org/dozer47528/alfred2-hasher)
 
-uc (any string) ->
-call all model `can tab` and support tab
-call all model `can convert`, if can convert print the result and sort by used times and suitability
+![screenshot](screenshot/ss-1.png)
 
-uc md5 xxxxxx
-cal md5 model and print the result
-call all model `can convert`, if can convert print the result and sort by used times and suitability
+![screenshot](screenshot/ss-2.png)
+
+![screenshot](screenshot/ss-3.png)
