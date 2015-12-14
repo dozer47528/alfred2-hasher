@@ -11,13 +11,13 @@ class Html(BaseModel):
     def convert(self, query):
         return [
             Item(
-                    title=u'Html Encode',
+                    title=u'Html Encode' + ': ' + query,
                     subtitle=saxutils.escape(query),
                     arg=saxutils.escape(query),
                     valid=True
             ),
             Item(
-                    title=u'Html Decode',
+                    title=u'Html Decode' + ': ' + query,
                     subtitle=saxutils.unescape(query),
                     arg=saxutils.unescape(query),
                     valid=True

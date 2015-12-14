@@ -13,7 +13,7 @@ class MD5(BaseModel):
         m.update(query)
         v = m.hexdigest()
         return [Item(
-                title=self.name,
+                title=self.name + ': ' + query,
                 subtitle=v,
                 arg=v,
                 valid=True
