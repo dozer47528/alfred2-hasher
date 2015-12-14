@@ -19,14 +19,22 @@ class UnifiedConverter:
         result = []
         result += self.autocomplete(query)
         result += self.convert_by_type(query)
-        # result += self.convert_all(query)
+        result += self.convert_all(query)
 
         # sort
         self.add_to_wf(result)
         self.wf.send_feedback()
 
     def convert_all(self, query):
-        return
+        result = []
+
+        if not query:
+            return result
+
+        for m in self.models:
+            result += m.convert(query)
+
+        return result
 
     def convert_by_type(self, query):
         query = str(query).strip()
@@ -45,8 +53,6 @@ class UnifiedConverter:
 
         if query.find(' ') >= 0:
             return result
-
-        result = []
 
         # 不是空的话有数量限制
         for m in self.models:
