@@ -8,6 +8,8 @@ The Alfred2 Workflow `Hasher` can convert anything like `MD5`, `datetime`, `Base
 
 Inspired from [Hasher (Chrome extension)](https://github.com/s12v/hasher)
 
+[Download](https://github.com/dozer47528/alfred2-hasher/releases)
+
 &nbsp;
 
 ### Screenshot
