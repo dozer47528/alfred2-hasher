@@ -23,9 +23,9 @@ Inspired from [Hasher (Chrome extension)](https://github.com/s12v/hasher)
 
 ### How to use
 
-* `hasher [anything]` : Get all result.
+* `hasher [anything]` -> `Select any one` -> `Press Enter`: Get all result, select one and copy to clipboard.
 * `hasher [converter name prefix]` -> `tab` : Converter name auto complete.
-* `hasher [converter name] [anything]` : Specify the converter.
+* `hasher [converter name] [anything]` -> `Select result` -> `Press Enter`: Specify the converter and convert the input, select one and copy to clipboard.
 
 &nbsp;
 
