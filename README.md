@@ -45,5 +45,4 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 ### What's Next
 
 * Add auto update support.
-* Sort result by frequency of use.
 * Add more converter.
