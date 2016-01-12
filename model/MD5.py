@@ -15,6 +15,7 @@ class MD5(BaseModel):
         return [Item(
                 title=self.name + ': ' + query,
                 subtitle=v,
+                key=self.name + u'-md5',
                 arg=v,
                 valid=True
         )]

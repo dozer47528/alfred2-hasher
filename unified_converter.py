@@ -3,6 +3,7 @@ from model.Base64 import Base64
 from model.DateTime import DateTime
 from model.Html import Html
 from model.MD5 import MD5
+from model.SHA import SHA
 from model.Javascript import Javascript
 from workflow import Workflow
 
@@ -10,7 +11,7 @@ from workflow import Workflow
 class UnifiedConverter:
     def __init__(self):
         self.wf = Workflow()
-        self.models = [MD5(), DateTime(), Base64(), Html(), Javascript()]
+        self.models = [MD5(), DateTime(), Base64(), Html(), Javascript(), SHA()]
         self.modelDict = dict()
         for m in self.models:
             self.modelDict[m.name] = m

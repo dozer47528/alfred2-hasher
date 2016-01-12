@@ -17,6 +17,7 @@ class Base64(BaseModel):
         result += [
             Item(
                     title=u'Base64 Encode' + ': ' + query,
+                    key=self.name + u'-encode',
                     subtitle=encode_result,
                     arg=encode_result,
                     valid=True
@@ -30,6 +31,7 @@ class Base64(BaseModel):
                     result += [
                         Item(
                                 title=u'Base64 Decode' + ': ' + query,
+                                key=self.name + u'-decode',
                                 subtitle=decode_result,
                                 arg=decode_result,
                                 valid=True
