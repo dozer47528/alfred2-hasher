@@ -716,11 +716,11 @@ class Item(object):
     def __init__(self, title, subtitle='', modifier_subtitles=None,
                  arg=None, autocomplete=None, valid=False, uid=None,
                  icon=None, icontype=None, type=None, largetext=None,
-                 key=None, copytext=None):
+                 copytext=None):
         """Arguments the same as for :meth:`Workflow.add_item`.
 
         """
-        self.key = key
+
         self.title = title
         self.subtitle = subtitle
         self.modifier_subtitles = modifier_subtitles or {}

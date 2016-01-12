@@ -12,6 +12,17 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+				<string>6EE3E38A-69CD-49F8-AFA9-7EEB8078F2D3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>6EE3E38A-69CD-49F8-AFA9-7EEB8078F2D3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
 				<string>BB6D11CF-B55E-4600-B454-EC9E99B3D7D2</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -30,6 +41,28 @@
 	<string>Hasher</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>from unified_converter import UnifiedConverter
+import sys
+sys.stdout.write(UnifiedConverter().cache("{query}"))
+sys.stdout.flush()</string>
+				<key>type</key>
+				<integer>3</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>6EE3E38A-69CD-49F8-AFA9-7EEB8078F2D3</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -85,6 +118,11 @@ UnifiedConverter().convert('''{query}''')</string>
 	<key>uidata</key>
 	<dict>
 		<key>67849839-76E2-4515-A23B-32672415A27E</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>6EE3E38A-69CD-49F8-AFA9-7EEB8078F2D3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>

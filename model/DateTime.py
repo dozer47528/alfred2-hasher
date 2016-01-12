@@ -21,15 +21,13 @@ class DateTime(BaseModel):
                 Item(
                         title=u'TimeStamp to DataTime(Local)' + ': ' + query,
                         subtitle=str(local_datetime),
-                        key=self.name + u'-timestamp-to-datetime-local',
-                        arg=str(local_datetime),
+                        arg=self.name + u'-timestamp-to-datetime-local:' + str(local_datetime),
                         valid=True
                 ),
                 Item(
                         title=u'TimeStamp to DataTime(UTC)' + ': ' + query,
                         subtitle=str(utc_datetime),
-                        key=self.name + u'-timestamp-to-datetime-utc',
-                        arg=str(utc_datetime),
+                        arg=self.name + u'-timestamp-to-datetime-utc:' + str(utc_datetime),
                         valid=True
                 )
             ]

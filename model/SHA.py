@@ -32,31 +32,26 @@ class SHA(BaseModel):
         return [Item(
                 title="SHA1" + ': ' + query,
                 subtitle=sha1_result,
-                key=self.name + u'-sha1',
-                arg=sha1_result,
+                arg=self.name + u'-sha1:' + sha1_result,
                 valid=True
         ), Item(
                 title="SHA256" + ': ' + query,
                 subtitle=sha256_result,
-                key=self.name + u'-sha256',
-                arg=sha256_result,
+                arg=self.name + u'-sha256:' + sha256_result,
                 valid=True
         ), Item(
                 title="SHA512" + ': ' + query,
                 subtitle=sha512_result,
-                key=self.name + u'-sha512',
-                arg=sha512_result,
+                arg=self.name + u'-sha512:' + sha512_result,
                 valid=True
         ), Item(
                 title="SHA224" + ': ' + query,
                 subtitle=sha224_result,
-                key=self.name + u'-sha224',
-                arg=sha224_result,
+                arg=self.name + u'-sha224:' + sha224_result,
                 valid=True
         ), Item(
                 title="SHA384" + ': ' + query,
                 subtitle=sha384_result,
-                key=self.name + u'-sha384',
-                arg=sha384_result,
+                arg=self.name + u'-sha384:' + sha384_result,
                 valid=True
         )]

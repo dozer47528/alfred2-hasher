@@ -11,18 +11,44 @@ from workflow import Workflow
 class UnifiedConverter:
     def __init__(self):
         self.wf = Workflow()
-        self.models = [MD5(), DateTime(), Base64(), Html(), Javascript(), SHA()]
+        self.models = [
+            MD5(),
+            DateTime(),
+            Base64(),
+            Html(),
+            Javascript(),
+            SHA()
+        ]
         self.modelDict = dict()
+        self.max_age = 60 * 60 * 24 * 365
         for m in self.models:
             self.modelDict[m.name] = m
 
+    def cache(self, query):
+        if not query:
+            return ""
+        result = query.split(":", 1)
+        key = result[0]
+        value = result[1]
+
+        count = self.wf.cached_data(key, max_age=self.max_age)
+        if not count:
+            count = 0
+        count += 1
+
+        self.wf.cache_data(key, count)
+
+        return value
+
     def convert(self, query):
+        if not query:
+            return
+
         result = []
         result += self.autocomplete(query)
-        result += self.convert_by_type(query)
-        result += self.convert_all(query)
+        result += self.sort_items(self.convert_by_type(query))
+        result += self.sort_items(self.convert_all(query))
 
-        # sort
         self.add_to_wf(result)
         self.wf.send_feedback()
 
@@ -60,6 +86,16 @@ class UnifiedConverter:
             result += m.autocomplete(query)
 
         return result
+
+    def sort_items(self, items):
+        def sort_by_usage(item):
+            key = item.arg.split(":", 1)[0]
+            count = self.wf.cached_data(key, max_age=self.max_age)
+            if not count:
+                return 0
+            return count
+
+        return sorted(items, reverse=True, key=sort_by_usage)
 
     def add_to_wf(self, items):
         for item in items:

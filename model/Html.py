@@ -13,15 +13,13 @@ class Html(BaseModel):
             Item(
                     title=u'Html Encode' + ': ' + query,
                     subtitle=saxutils.escape(query),
-                    key=self.name + u'-encode',
-                    arg=saxutils.escape(query),
+                    arg=self.name + u'-encode:' + saxutils.escape(query),
                     valid=True
             ),
             Item(
                     title=u'Html Decode' + ': ' + query,
                     subtitle=saxutils.unescape(query),
-                    key=self.name + u'-decode',
-                    arg=saxutils.unescape(query),
+                    arg=self.name + u'-decode:' + saxutils.unescape(query),
                     valid=True
             )
         ]
