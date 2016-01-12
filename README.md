@@ -38,6 +38,7 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 * Base64
 * Html Encode, Decode
 * JavaScript encodeURI, encodeURIComponent, decode
+* SHA1, SHA223, SHA256, SHA384, SHA512
 
 &nbsp;
 
