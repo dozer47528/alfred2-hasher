@@ -34,7 +34,7 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 ### Supported Converter
 
 * MD5
-* DataTime
+* DateTime
 * Base64
 * Html Encode, Decode
 * JavaScript encodeURI, encodeURIComponent, decode
