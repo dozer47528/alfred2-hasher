@@ -1,4 +1,4 @@
 from unified_converter import UnifiedConverter
 
 converter = UnifiedConverter()
-converter.convert("2222")
+converter.convert("ascii 1")

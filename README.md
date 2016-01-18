@@ -34,11 +34,13 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 ### Supported Converter
 
 * MD5
-* DateTime
 * Base64
-* Html Encode, Decode
-* JavaScript encodeURI, encodeURIComponent, decode
-* SHA1, SHA223, SHA256, SHA384, SHA512
+* ASCII
+* DateTime: Timestamp to DateTime
+* Html: Encode, Decode
+* JavaScript: JavaScript encodeURI, encodeURIComponent, decode
+* SHA: SHA1, SHA223, SHA256, SHA384, SHA512
+* Number: Dec, Bin, Oct, Hex
 
 &nbsp;
 

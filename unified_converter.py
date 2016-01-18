@@ -4,6 +4,8 @@ from model.DateTime import DateTime
 from model.Html import Html
 from model.MD5 import MD5
 from model.SHA import SHA
+from model.Number import Number
+from model.ASCII import ASCII
 from model.Javascript import Javascript
 from workflow import Workflow
 
@@ -17,7 +19,9 @@ class UnifiedConverter:
             Base64(),
             Html(),
             Javascript(),
-            SHA()
+            SHA(),
+            Number(),
+            ASCII()
         ]
         self.modelDict = dict()
         self.max_age = 60 * 60 * 24 * 365
