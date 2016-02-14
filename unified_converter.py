@@ -45,9 +45,6 @@ class UnifiedConverter:
         return value
 
     def convert(self, query):
-        if not query:
-            return
-
         result = []
         result += self.autocomplete(query)
         result += self.sort_items(self.convert_by_type(query))
