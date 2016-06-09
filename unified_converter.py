@@ -9,10 +9,20 @@ from model.ascii import ASCII
 from model.javascript import Javascript
 from workflow import Workflow
 
+__version__ = "1.2"
+
 
 class UnifiedConverter:
     def __init__(self):
-        self.wf = Workflow()
+        self.wf = Workflow(update_settings={
+            'github_slug': 'dozer47528/alfred2-hasher',
+            'version': __version__,
+            'frequency': 1
+        })
+
+        if self.wf.update_available:
+            self.wf.start_update()
+
         self.models = [
             MD5(),
             DateTime(),
