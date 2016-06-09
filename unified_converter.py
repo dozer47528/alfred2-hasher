@@ -89,6 +89,9 @@ class UnifiedConverter:
         return result
 
     def sort_items(self, items):
+        if not items:
+            return []
+
         def sort_by_usage(item):
             key = item.arg.split(":", 1)[0]
             count = self.wf.cached_data(key, max_age=self.max_age)
@@ -101,16 +104,16 @@ class UnifiedConverter:
     def add_to_wf(self, items):
         for item in items:
             self.wf.add_item(
-                    title=item.title,
-                    subtitle=item.subtitle,
-                    modifier_subtitles=item.modifier_subtitles,
-                    arg=item.arg,
-                    autocomplete=item.autocomplete,
-                    valid=item.valid,
-                    uid=item.uid,
-                    icon=item.icon,
-                    icontype=item.icontype,
-                    type=item.type,
-                    largetext=item.largetext,
-                    copytext=item.copytext
+                title=item.title,
+                subtitle=item.subtitle,
+                modifier_subtitles=item.modifier_subtitles,
+                arg=item.arg,
+                autocomplete=item.autocomplete,
+                valid=item.valid,
+                uid=item.uid,
+                icon=item.icon,
+                icontype=item.icontype,
+                type=item.type,
+                largetext=item.largetext,
+                copytext=item.copytext
             )
