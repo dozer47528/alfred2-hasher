@@ -36,7 +36,7 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 * MD5
 * Base64
 * ASCII
-* DateTime: Timestamp to DateTime
+* DateTime: Timestamp to DateTime, DateTime to Timestamp
 * Html: Encode, Decode
 * JavaScript: JavaScript encodeURI, encodeURIComponent, decode
 * SHA: SHA1, SHA223, SHA256, SHA384, SHA512
