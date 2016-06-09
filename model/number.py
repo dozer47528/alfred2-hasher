@@ -5,7 +5,7 @@ from xml.sax import saxutils
 
 class Number(BaseModel):
     def __init__(self):
-        self.name = u'num'
+        self.name = u'number'
         self.desc = u'Number Converter'
 
     def convert(self, query):
