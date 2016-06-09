@@ -1,4 +1,4 @@
-from model.BaseModel import BaseModel
+from model.base_model import BaseModel
 from workflow.workflow import Item
 from xml.sax import saxutils
 

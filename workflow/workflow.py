@@ -20,6 +20,7 @@ from __future__ import print_function, unicode_literals
 import binascii
 from contextlib import contextmanager
 import cPickle
+from copy import deepcopy
 import errno
 import json
 import logging
@@ -445,17 +446,17 @@ class AcquisitionError(Exception):
 
 
 class KeychainError(Exception):
-    """Raised by methods :meth:`Workflow.save_password`,
+    """Raised for unknown Keychain errors.
+
+    Raised by methods :meth:`Workflow.save_password`,
     :meth:`Workflow.get_password` and :meth:`Workflow.delete_password`
     when ``security`` CLI app returns an unknown error code.
-
     """
 
 
 class PasswordNotFound(KeychainError):
     """Raised by method :meth:`Workflow.get_password` when ``account``
     is unknown to the Keychain.
-
     """
 
 
@@ -465,7 +466,6 @@ class PasswordExists(KeychainError):
     You should never receive this error: it is used internally
     by the :meth:`Workflow.save_password` method to know if it needs
     to delete the old password first (a Keychain implementation detail).
-
     """
 
 
@@ -474,7 +474,7 @@ class PasswordExists(KeychainError):
 ####################################################################
 
 def isascii(text):
-    """Test if ``text`` contains only ASCII characters
+    """Test if ``text`` contains only ASCII characters.
 
     :param text: text to test for ASCII-ness
     :type text: ``unicode``
@@ -511,6 +511,7 @@ class SerializerManager(object):
     """
 
     def __init__(self):
+        """Create new SerializerManager object."""
         self._serializers = {}
 
     def register(self, name, serializer):
@@ -536,19 +537,19 @@ class SerializerManager(object):
         self._serializers[name] = serializer
 
     def serializer(self, name):
-        """Return serializer object for ``name`` or ``None`` if no such
-        serializer is registered
+        """Return serializer object for ``name``.
 
         :param name: Name of serializer to return
         :type name: ``unicode`` or ``str``
-        :returns: serializer object or ``None``
+        :returns: serializer object or ``None`` if no such serializer
+            is registered.
 
         """
 
         return self._serializers.get(name)
 
     def unregister(self, name):
-        """Remove registered serializer with ``name``
+        """Remove registered serializer with ``name``.
 
         Raises a :class:`ValueError` if there is no such registered
         serializer.
@@ -560,7 +561,8 @@ class SerializerManager(object):
         """
 
         if name not in self._serializers:
-            raise ValueError('No such serializer registered : {0}'.format(name))
+            raise ValueError('No such serializer registered : {0}'.format(
+                             name))
 
         serializer = self._serializers[name]
         del self._serializers[name]
@@ -569,7 +571,7 @@ class SerializerManager(object):
 
     @property
     def serializers(self):
-        """Return names of registered serializers"""
+        """Return names of registered serializers."""
         return sorted(self._serializers.keys())
 
 
@@ -704,8 +706,9 @@ manager.register('json', JSONSerializer)
 
 
 class Item(object):
-    """Represents a feedback item for Alfred. Generates Alfred-compliant
-    XML for a single item.
+    """Represents a feedback item for Alfred.
+
+    Generates Alfred-compliant XML for a single item.
 
     You probably shouldn't use this class directly, but via
     :meth:`Workflow.add_item`. See :meth:`~Workflow.add_item`
@@ -796,9 +799,10 @@ class Item(object):
 
 
 class LockFile(object):
-    """Context manager to create lock files"""
+    """Context manager to create lock files."""
 
     def __init__(self, protected_path, timeout=0, delay=0.05):
+        """Create new :class:`LockFile` object."""
         self.lockfile = protected_path + '.lock'
         self.timeout = timeout
         self.delay = delay
@@ -965,6 +969,7 @@ class Settings(dict):
         super(Settings, self).__init__()
         self._filepath = filepath
         self._nosave = False
+        self._original = {}
         if os.path.exists(self._filepath):
             self._load()
         elif defaults:
@@ -976,11 +981,15 @@ class Settings(dict):
         """Load cached settings from JSON file `self._filepath`"""
 
         self._nosave = True
+        d = {}
         with open(self._filepath, 'rb') as file_obj:
             for key, value in json.load(file_obj, encoding='utf-8').items():
-                self[key] = value
+                d[key] = value
+        self.update(d)
+        self._original = deepcopy(d)
         self._nosave = False
 
+    @uninterruptible
     def save(self):
         """Save settings to JSON file specified in ``self._filepath``
 
@@ -991,8 +1000,9 @@ class Settings(dict):
         if self._nosave:
             return
         data = {}
-        for key, value in self.items():
-            data[key] = value
+        data.update(self)
+        # for key, value in self.items():
+        #     data[key] = value
         with LockFile(self._filepath):
             with atomic_writer(self._filepath, 'wb') as file_obj:
                 json.dump(data, file_obj, sort_keys=True, indent=2,
@@ -1000,8 +1010,9 @@ class Settings(dict):
 
     # dict methods
     def __setitem__(self, key, value):
-        super(Settings, self).__setitem__(key, value)
-        self.save()
+        if self._original.get(key) != value:
+            super(Settings, self).__setitem__(key, value)
+            self.save()
 
     def __delitem__(self, key):
         super(Settings, self).__delitem__(key)
@@ -1029,7 +1040,10 @@ class Workflow(object):
         :param update_settings: settings for updating your workflow from GitHub.
             This must be a :class:`dict` that contains ``github_slug`` and
             ``version`` keys. ``github_slug`` is of the form ``username/repo``
-            and ``version`` **must** correspond to the tag of a release.
+            and ``version`` **must** correspond to the tag of a release. The
+            boolean ``prereleases`` key is optional and if ``True`` will
+            override the :ref:`magic argument <magic-arguments>` preference.
+            This is only recommended when the installed workflow is a pre-release.
             See :ref:`updates` for more information.
         :type update_settings: :class:`dict`
         :param input_encoding: encoding of command line arguments
@@ -1466,7 +1480,6 @@ class Workflow(object):
         :returns: an initialised :class:`~logging.Logger`
 
         """
-
         if self._logger:
             return self._logger
 
@@ -1474,22 +1487,21 @@ class Workflow(object):
         logger = logging.getLogger('workflow')
 
         if not len(logger.handlers):  # Only add one set of handlers
-            logfile = logging.handlers.RotatingFileHandler(
-                self.logfile,
-                maxBytes=1024*1024,
-                backupCount=1)
-
-            console = logging.StreamHandler()
 
             fmt = logging.Formatter(
                 '%(asctime)s %(filename)s:%(lineno)s'
                 ' %(levelname)-8s %(message)s',
                 datefmt='%H:%M:%S')
 
+            logfile = logging.handlers.RotatingFileHandler(
+                self.logfile,
+                maxBytes=1024*1024,
+                backupCount=1)
             logfile.setFormatter(fmt)
-            console.setFormatter(fmt)
-
             logger.addHandler(logfile)
+
+            console = logging.StreamHandler()
+            console.setFormatter(fmt)
             logger.addHandler(console)
 
         logger.setLevel(logging.DEBUG)
@@ -1505,7 +1517,6 @@ class Workflow(object):
         :type logger: `~logging.Logger` instance
 
         """
-
         self._logger = logger
 
     @property
@@ -2136,8 +2147,10 @@ class Workflow(object):
         # Call workflow's entry function/method within a try-except block
         # to catch any errors and display an error message in Alfred
         try:
+
             if self.version:
-                self.logger.debug('Workflow version : {0}'.format(self.version))
+                self.logger.debug(
+                    'Workflow version : {0}'.format(self.version))
 
             # Run update check if configured for self-updates.
             # This call has to go in the `run` try-except block, as it will
@@ -2159,6 +2172,7 @@ class Workflow(object):
             if self.help_url:
                 self.logger.info(
                     'For assistance, see: {0}'.format(self.help_url))
+
             if not sys.stdout.isatty():  # Show error in Alfred
                 self._items = []
                 if self._name:
@@ -2171,9 +2185,11 @@ class Workflow(object):
                               icon=ICON_ERROR)
                 self.send_feedback()
             return 1
+
         finally:
             self.logger.debug('Workflow finished in {0:0.3f} seconds.'.format(
-                              time.time() - start))
+                time.time() - start))
+
         return 0
 
     # Alfred feedback methods ------------------------------------------
@@ -2353,6 +2369,23 @@ class Workflow(object):
 
         return update_data['available']
 
+    @property
+    def prereleases(self):
+        """Should the workflow update to a newer pre-release version if
+        available?
+
+        .. versionadded:: 1.16
+
+        :returns: ``True`` if pre-releases are enabled with the :ref:`magic
+        argument <magic-arguments>` or the ``update_settings`` dict, else
+        ``False``
+
+        """
+        if self._update_settings.get('prereleases'):
+            return True
+
+        return self.settings.get('__workflow_prereleases') or False
+
     def check_update(self, force=False):
         """Call update script if it's time to check for a new release
 
@@ -2393,6 +2426,9 @@ class Workflow(object):
             cmd = ['/usr/bin/python', update_script, 'check', github_slug,
                    version]
 
+            if self.prereleases:
+                cmd.append('--prereleases')
+
             self.logger.info('Checking for update ...')
 
             run_in_background('__workflow_update_check', cmd)
@@ -2419,7 +2455,7 @@ class Workflow(object):
         # version = self._update_settings['version']
         version = str(self.version)
 
-        if not update.check_update(github_slug, version):
+        if not update.check_update(github_slug, version, self.prereleases):
             return False
 
         from background import run_in_background
@@ -2430,6 +2466,9 @@ class Workflow(object):
 
         cmd = ['/usr/bin/python', update_script, 'install', github_slug,
                version]
+
+        if self.prereleases:
+            cmd.append('--prereleases')
 
         self.logger.debug('Downloading update ...')
         run_in_background('__workflow_update_install', cmd)
@@ -2601,6 +2640,14 @@ class Workflow(object):
             self.settings['__workflow_autoupdate'] = False
             return 'Auto update turned off'
 
+        def prereleases_on():
+            self.settings['__workflow_prereleases'] = True
+            return 'Prerelease updates turned on'
+
+        def prereleases_off():
+            self.settings['__workflow_prereleases'] = False
+            return 'Prerelease updates turned off'
+
         def do_update():
             if self.start_update():
                 return 'Downloading and installing update ...'
@@ -2609,6 +2656,8 @@ class Workflow(object):
 
         self.magic_arguments['autoupdate'] = update_on
         self.magic_arguments['noautoupdate'] = update_off
+        self.magic_arguments['prereleases'] = prereleases_on
+        self.magic_arguments['noprereleases'] = prereleases_off
         self.magic_arguments['update'] = do_update
 
         # Help
@@ -2867,13 +2916,13 @@ class Workflow(object):
         cmd = ['security', action, '-s', service, '-a', account] + list(args)
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
-        retcode, output = p.wait(), p.stdout.read().strip().decode('utf-8')
-        if retcode == 44:  # password does not exist
+        stdout, _ = p.communicate()
+        if p.returncode == 44:  # password does not exist
             raise PasswordNotFound()
-        elif retcode == 45:  # password already exists
+        elif p.returncode == 45:  # password already exists
             raise PasswordExists()
-        elif retcode > 0:
-            err = KeychainError('Unknown Keychain error : %s' % output)
-            err.retcode = retcode
+        elif p.returncode > 0:
+            err = KeychainError('Unknown Keychain error : %s' % stdout)
+            err.retcode = p.returncode
             raise err
-        return output
+        return stdout.strip().decode('utf-8')

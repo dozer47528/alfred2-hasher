@@ -1,5 +1,5 @@
 from workflow.workflow import Item
-from model.BaseModel import BaseModel
+from model.base_model import BaseModel
 import hashlib
 
 

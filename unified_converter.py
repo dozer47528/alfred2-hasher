@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from model.Base64 import Base64
-from model.DateTime import DateTime
-from model.Html import Html
-from model.MD5 import MD5
-from model.SHA import SHA
-from model.Number import Number
-from model.ASCII import ASCII
-from model.Javascript import Javascript
+from model.base_64 import Base64
+from model.date_time import DateTime
+from model.html import Html
+from model.md5 import MD5
+from model.sha import SHA
+from model.number import Number
+from model.ascii import ASCII
+from model.javascript import Javascript
 from workflow import Workflow
 
 
