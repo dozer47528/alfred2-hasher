@@ -3,4 +3,4 @@ python:
   - "2.7"
 
 script:
-  - python unified_converter.py
+  - python test_all.py
