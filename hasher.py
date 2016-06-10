@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
+
+import sys
+
+from model.ascii import ASCII
 from model.base_64 import Base64
 from model.date_time import DateTime
 from model.html import Html
-from model.md5 import MD5
-from model.sha import SHA
-from model.number import Number
-from model.ascii import ASCII
 from model.javascript import Javascript
-from workflow import Workflow
+from model.md5 import MD5
+from model.number import Number
+from model.sha import SHA
+from workflow import Workflow, ICON_INFO
 
 __version__ = "1.2"
 
 
-class UnifiedConverter:
-    def __init__(self):
-        self.wf = Workflow(update_settings={
-            'github_slug': 'dozer47528/alfred2-hasher',
-            'version': __version__,
-            'frequency': 1
-        })
-
+class Hasher:
+    def __init__(self, wf):
+        self.wf = wf
         if self.wf.update_available:
-            self.wf.start_update()
+            wf.add_item('New version available',
+                        'Action this item to install the update',
+                        autocomplete='workflow:update',
+                        icon=ICON_INFO)
 
         self.models = [
             MD5(),
@@ -37,22 +38,6 @@ class UnifiedConverter:
         self.max_age = 60 * 60 * 24 * 365
         for m in self.models:
             self.modelDict[m.name] = m
-
-    def cache(self, query):
-        if not query:
-            return ""
-        result = query.split(":", 1)
-        key = result[0]
-        value = result[1]
-
-        count = self.wf.cached_data(key, max_age=self.max_age)
-        if not count:
-            count = 0
-        count += 1
-
-        self.wf.cache_data(key, count)
-
-        return value
 
     def convert(self, query):
         result = []
@@ -92,7 +77,6 @@ class UnifiedConverter:
         if query.find(' ') >= 0:
             return result
 
-        # 不是空的话有数量限制
         for m in self.models:
             result += m.autocomplete(query)
 
@@ -127,3 +111,22 @@ class UnifiedConverter:
                 largetext=item.largetext,
                 copytext=item.copytext
             )
+
+
+def main(wf):
+    query = None
+
+    if len(wf.args):
+        query = wf.args[0]
+
+    hasher = Hasher(wf)
+    hasher.convert(query)
+
+
+if __name__ == u"__main__":
+    wf = Workflow(update_settings={
+        'github_slug': 'dozer47528/alfred2-hasher',
+        'version': __version__,
+        'frequency': 1})
+
+    sys.exit(wf.run(main))
