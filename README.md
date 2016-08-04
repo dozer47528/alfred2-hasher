@@ -1,4 +1,4 @@
-# Alfred2 Hasher
+# Alfred2 Hasher (Support Alfred3)
 
 [![Build Status](https://travis-ci.org/dozer47528/alfred2-hasher.svg?branch=master)](https://travis-ci.org/dozer47528/alfred2-hasher)
 
