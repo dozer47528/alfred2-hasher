@@ -46,5 +46,4 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 
 ### What's Next
 
-* Add auto update support.
 * Add more converter.
