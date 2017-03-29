@@ -12,7 +12,10 @@ class Hasher:
 
     def cache(self, query):
         if not query:
-            print ""
+            sys.stdout.write("")
+            sys.stdout.flush()
+            return
+
         result = query.split(":", 1)
         key = result[0]
         value = result[1]
@@ -24,7 +27,9 @@ class Hasher:
 
         self.wf.cache_data(key, count)
 
-        print value
+        sys.stdout.write(value)
+        sys.stdout.flush()
+
 
 def main(wf):
     query = None
