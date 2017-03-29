@@ -128,5 +128,6 @@ if __name__ == u"__main__":
         'github_slug': 'dozer47528/alfred2-hasher',
         'version': __version__,
         'frequency': 1})
+    wf.cache_serializer = 'json'
 
     sys.exit(wf.run(main))

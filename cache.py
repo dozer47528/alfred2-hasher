@@ -43,4 +43,5 @@ def main(wf):
 
 if __name__ == u"__main__":
     wf = Workflow()
+    wf.cache_serializer = 'json'
     sys.exit(wf.run(main))
