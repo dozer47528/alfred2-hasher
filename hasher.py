@@ -12,7 +12,7 @@ from model.number import Number
 from model.sha import SHA
 from workflow import Workflow, ICON_INFO
 
-__version__ = "1.2.1"
+__version__ = "1.2.2"
 
 
 class Hasher:
