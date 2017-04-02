@@ -155,6 +155,8 @@
 			<real>10</real>
 		</dict>
 	</dict>
+	<key>version</key>
+	<string>1.2.3</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>
