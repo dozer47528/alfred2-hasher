@@ -1,6 +1,7 @@
-from workflow.workflow import Item
-from model.base_model import BaseModel
 import hashlib
+
+from model.base_model import BaseModel
+from workflow.workflow import Item
 
 
 class SHA(BaseModel):
@@ -30,28 +31,33 @@ class SHA(BaseModel):
         sha512_result = sha512.hexdigest()
 
         return [Item(
-                title="SHA1" + ': ' + query,
-                subtitle=sha1_result,
-                arg=self.name + u'-sha1:' + sha1_result,
-                valid=True
+            title="SHA1" + ': ' + query,
+            subtitle=sha1_result,
+            arg=self.name + u'-sha1:' + sha1_result,
+            valid=True,
+            icon=self.icon_path()
         ), Item(
-                title="SHA256" + ': ' + query,
-                subtitle=sha256_result,
-                arg=self.name + u'-sha256:' + sha256_result,
-                valid=True
+            title="SHA256" + ': ' + query,
+            subtitle=sha256_result,
+            arg=self.name + u'-sha256:' + sha256_result,
+            valid=True,
+            icon=self.icon_path()
         ), Item(
-                title="SHA512" + ': ' + query,
-                subtitle=sha512_result,
-                arg=self.name + u'-sha512:' + sha512_result,
-                valid=True
+            title="SHA512" + ': ' + query,
+            subtitle=sha512_result,
+            arg=self.name + u'-sha512:' + sha512_result,
+            valid=True,
+            icon=self.icon_path()
         ), Item(
-                title="SHA224" + ': ' + query,
-                subtitle=sha224_result,
-                arg=self.name + u'-sha224:' + sha224_result,
-                valid=True
+            title="SHA224" + ': ' + query,
+            subtitle=sha224_result,
+            arg=self.name + u'-sha224:' + sha224_result,
+            valid=True,
+            icon=self.icon_path()
         ), Item(
-                title="SHA384" + ': ' + query,
-                subtitle=sha384_result,
-                arg=self.name + u'-sha384:' + sha384_result,
-                valid=True
+            title="SHA384" + ': ' + query,
+            subtitle=sha384_result,
+            arg=self.name + u'-sha384:' + sha384_result,
+            valid=True,
+            icon=self.icon_path()
         )]

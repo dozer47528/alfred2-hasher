@@ -1,8 +1,9 @@
+import re
+from datetime import datetime
+
+from dateutil.parser import parse
 from model.base_model import BaseModel
 from workflow.workflow import Item
-from datetime import datetime
-from dateutil.parser import parse
-import re
 
 
 class DateTime(BaseModel):
@@ -27,13 +28,15 @@ class DateTime(BaseModel):
                     title=u'TimeStamp to DateTime(Local)' + ': ' + query,
                     subtitle=str(local_datetime),
                     arg=self.name + u'-timestamp-to-datetime-local:' + str(local_datetime),
-                    valid=True
+                    valid=True,
+                    icon=self.icon_path()
                 ),
                 Item(
                     title=u'TimeStamp to DateTime(UTC)' + ': ' + query,
                     subtitle=str(utc_datetime),
                     arg=self.name + u'-timestamp-to-datetime-utc:' + str(utc_datetime),
-                    valid=True
+                    valid=True,
+                    icon=self.icon_path()
                 )
             ]
         else:
@@ -45,7 +48,8 @@ class DateTime(BaseModel):
                         title=u'TimeStamp to DateTime to TimeStamp' + ': ' + query,
                         subtitle=convert_result,
                         arg=self.name + u'-datetime-to-timestamp:' + convert_result,
-                        valid=True
+                        valid=True,
+                        icon=self.icon_path()
                     )
                 ]
             except:

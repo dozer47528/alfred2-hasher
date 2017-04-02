@@ -1,6 +1,7 @@
-from workflow.workflow import Item
-from model.base_model import BaseModel
 import hashlib
+
+from model.base_model import BaseModel
+from workflow.workflow import Item
 
 
 class MD5(BaseModel):
@@ -13,8 +14,9 @@ class MD5(BaseModel):
         m.update(query)
         v = m.hexdigest()
         return [Item(
-                title=self.name + ': ' + query,
-                subtitle=v,
-                arg=self.name + u'-md5:' + v,
-                valid=True
+            title=self.name + ': ' + query,
+            subtitle=v,
+            arg=self.name + u'-md5:' + v,
+            valid=True,
+            icon=self.icon_path()
         )]

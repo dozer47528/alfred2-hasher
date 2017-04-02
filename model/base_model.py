@@ -3,7 +3,7 @@ from workflow.workflow import Item
 
 class BaseModel:
     def autocomplete(self, query):
-        item = Item(title=self.desc, autocomplete=self.name + ' ')
+        item = Item(title=self.desc, autocomplete=self.name + ' ', icon=self.icon_path())
 
         if not query:
             item.sort = 0
@@ -14,3 +14,6 @@ class BaseModel:
         else:
             return []
         return [item]
+
+    def icon_path(self):
+        return 'icons/%s.png' % self.name

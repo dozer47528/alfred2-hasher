@@ -1,6 +1,7 @@
+from xml.sax import saxutils
+
 from model.base_model import BaseModel
 from workflow.workflow import Item
-from xml.sax import saxutils
 
 
 class Html(BaseModel):
@@ -11,15 +12,17 @@ class Html(BaseModel):
     def convert(self, query):
         return [
             Item(
-                    title=u'Html Encode' + ': ' + query,
-                    subtitle=saxutils.escape(query),
-                    arg=self.name + u'-encode:' + saxutils.escape(query),
-                    valid=True
+                title=u'Html Encode' + ': ' + query,
+                subtitle=saxutils.escape(query),
+                arg=self.name + u'-encode:' + saxutils.escape(query),
+                valid=True,
+                icon=self.icon_path()
             ),
             Item(
-                    title=u'Html Decode' + ': ' + query,
-                    subtitle=saxutils.unescape(query),
-                    arg=self.name + u'-decode:' + saxutils.unescape(query),
-                    valid=True
+                title=u'Html Decode' + ': ' + query,
+                subtitle=saxutils.unescape(query),
+                arg=self.name + u'-decode:' + saxutils.unescape(query),
+                valid=True,
+                icon=self.icon_path()
             )
         ]

@@ -25,8 +25,8 @@ class Hasher:
                         icon=ICON_INFO)
 
         self.models = [
-            MD5(),
             DateTime(),
+            MD5(),
             Base64(),
             Html(),
             Javascript(),

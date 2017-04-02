@@ -1,6 +1,5 @@
 from model.base_model import BaseModel
 from workflow.workflow import Item
-from xml.sax import saxutils
 
 
 class Number(BaseModel):
@@ -19,52 +18,58 @@ class Number(BaseModel):
 
         try:
             result.append(Item(
-                    title=u'Bin to Dec' + ': ' + query,
-                    subtitle=str(int(query, 2)),
-                    arg=self.name + u'-bin2dec:' + str(int(query, 2)),
-                    valid=True
+                title=u'Bin to Dec' + ': ' + query,
+                subtitle=str(int(query, 2)),
+                arg=self.name + u'-bin2dec:' + str(int(query, 2)),
+                valid=True,
+                icon=self.icon_path()
             ))
         except ValueError:
             pass
 
         try:
             result.append(Item(
-                    title=u'Oct to Dec' + ': ' + query,
-                    subtitle=str(int(query, 8)),
-                    arg=self.name + u'-oct2dec:' + str(int(query, 8)),
-                    valid=True
+                title=u'Oct to Dec' + ': ' + query,
+                subtitle=str(int(query, 8)),
+                arg=self.name + u'-oct2dec:' + str(int(query, 8)),
+                valid=True,
+                icon=self.icon_path()
             ))
         except ValueError:
             pass
 
         try:
             result.append(Item(
-                    title=u'Hex to Dec' + ': ' + query,
-                    subtitle=str(int(query, 16)),
-                    arg=self.name + u'-hex2dec:' + str(int(query, 16)),
-                    valid=True
+                title=u'Hex to Dec' + ': ' + query,
+                subtitle=str(int(query, 16)),
+                arg=self.name + u'-hex2dec:' + str(int(query, 16)),
+                valid=True,
+                icon=self.icon_path()
             ))
         except ValueError:
             pass
 
         if decSource:
             result.append(Item(
-                    title=u'Dec to Hex' + ': ' + query,
-                    subtitle=hex(decSource),
-                    arg=self.name + u'-dec2hex:' + hex(decSource),
-                    valid=True
+                title=u'Dec to Hex' + ': ' + query,
+                subtitle=hex(decSource),
+                arg=self.name + u'-dec2hex:' + hex(decSource),
+                valid=True,
+                icon=self.icon_path()
             ))
             result.append(Item(
-                    title=u'Dec to Bin' + ': ' + query,
-                    subtitle=bin(decSource),
-                    arg=self.name + u'-dec2bin:' + bin(decSource),
-                    valid=True
+                title=u'Dec to Bin' + ': ' + query,
+                subtitle=bin(decSource),
+                arg=self.name + u'-dec2bin:' + bin(decSource),
+                valid=True,
+                icon=self.icon_path()
             ))
             result.append(Item(
-                    title=u'Dec to Oct' + ': ' + query,
-                    subtitle=oct(decSource),
-                    arg=self.name + u'-dec2oct:' + oct(decSource),
-                    valid=True
+                title=u'Dec to Oct' + ': ' + query,
+                subtitle=oct(decSource),
+                arg=self.name + u'-dec2oct:' + oct(decSource),
+                valid=True,
+                icon=self.icon_path()
             ))
 
         return result

@@ -16,10 +16,11 @@ class Base64(BaseModel):
         encode_result = base64.encodestring(query).replace('\n', '')
         result += [
             Item(
-                    title=u'Base64 Encode' + ': ' + query,
-                    subtitle=encode_result,
-                    arg=self.name + u'-encode:' + encode_result,
-                    valid=True
+                title=u'Base64 Encode' + ': ' + query,
+                subtitle=encode_result,
+                arg=self.name + u'-encode:' + encode_result,
+                valid=True,
+                icon=self.icon_path()
             )
         ]
 
@@ -29,10 +30,11 @@ class Base64(BaseModel):
                 if base64.encodestring(decode_result).replace('\n', '') == query:
                     result += [
                         Item(
-                                title=u'Base64 Decode' + ': ' + query,
-                                subtitle=decode_result,
-                                arg=self.name + u'-decode:' + decode_result,
-                                valid=True
+                            title=u'Base64 Decode' + ': ' + query,
+                            subtitle=decode_result,
+                            arg=self.name + u'-decode:' + decode_result,
+                            valid=True,
+                            icon=self.icon_path()
                         )
                     ]
         except:

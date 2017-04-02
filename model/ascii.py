@@ -1,6 +1,5 @@
 from model.base_model import BaseModel
 from workflow.workflow import Item
-from xml.sax import saxutils
 
 
 class ASCII(BaseModel):
@@ -20,7 +19,8 @@ class ASCII(BaseModel):
                         title=u'Number to ASCII' + ': ' + query,
                         subtitle=char,
                         arg=self.name + u'-num2ascii:' + char,
-                        valid=True
+                        valid=True,
+                        icon=self.icon_path()
                     ))
         except ValueError:
             pass
@@ -31,7 +31,8 @@ class ASCII(BaseModel):
                     title=u'ASCII to Number' + ': ' + query,
                     subtitle=str(ord(query[0])),
                     arg=self.name + u'-ascii2number:' + str(ord(query[0])),
-                    valid=True
+                    valid=True,
+                    icon=self.icon_path()
                 ))
         except ValueError:
             pass
