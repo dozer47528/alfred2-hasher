@@ -10,9 +10,10 @@ from model.javascript import Javascript
 from model.md5 import MD5
 from model.number import Number
 from model.sha import SHA
+from model.the_uuid import TheUUID
 from workflow import Workflow, ICON_INFO
 
-__version__ = "1.2.5"
+__version__ = "1.2.6"
 
 
 class Hasher:
@@ -32,7 +33,8 @@ class Hasher:
             Javascript(),
             SHA(),
             Number(),
-            ASCII()
+            ASCII(),
+            TheUUID()
         ]
         self.modelDict = dict()
         self.max_age = 60 * 60 * 24 * 365
@@ -61,15 +63,16 @@ class Hasher:
 
     def convert_by_type(self, query):
         query = str(query).strip()
-        if query.find(' ') == -1:
-            return []
+        if " " not in query:
+            if query in self.modelDict:
+                return self.modelDict[query].convert("")
+        else:
+            group = query.split(' ', 1)
+            type_value = group[0]
+            input_value = group[1]
 
-        group = query.split(' ', 1)
-        type_value = group[0]
-        input_value = group[1]
-
-        if type_value in self.modelDict:
-            return self.modelDict[type_value].convert(input_value)
+            if type_value in self.modelDict:
+                return self.modelDict[type_value].convert(input_value)
 
     def autocomplete(self, query):
         result = []
