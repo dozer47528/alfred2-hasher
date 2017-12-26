@@ -14,7 +14,7 @@ from model.string import String
 from model.the_uuid import TheUUID
 from workflow import Workflow, ICON_INFO
 
-__version__ = "1.2.6"
+__version__ = "1.2.7"
 
 
 class Hasher:
