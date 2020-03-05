@@ -48,10 +48,15 @@ class DateTime(BaseModel):
                 )
             ]
         else:
-            if re.search('^\d+(\.\d?)?$', query):
+            if re.search(r'^\d+(\.\d?)?$', query):
                 timestamp = float(query)
-                local_datetime = datetime.fromtimestamp(timestamp)
-                utc_datetime = datetime.utcfromtimestamp(timestamp)
+                try:
+                    local_datetime = datetime.fromtimestamp(timestamp)
+                    utc_datetime = datetime.utcfromtimestamp(timestamp)
+                except ValueError:
+                    timestamp = timestamp / 1000
+                    local_datetime = datetime.fromtimestamp(timestamp)
+                    utc_datetime = datetime.utcfromtimestamp(timestamp)
 
                 result += [
                     Item(
