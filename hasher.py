@@ -11,6 +11,7 @@ from model.md5 import MD5
 from model.number import Number
 from model.sha import SHA
 from model.string import String
+from model.naming import Naming
 from model.the_uuid import TheUUID
 from workflow import Workflow, ICON_INFO
 
@@ -36,7 +37,8 @@ class Hasher:
             Number(),
             ASCII(),
             TheUUID(),
-            String()
+            String(),
+            Naming()
         ]
         self.modelDict = dict()
         self.max_age = 60 * 60 * 24 * 365
