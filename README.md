@@ -43,6 +43,7 @@ Thanks to [Alfred-Workflow](https://github.com/deanishe/alfred-workflow)
 * SHA: SHA1, SHA223, SHA256, SHA384, SHA512
 * Number: Dec, Bin, Oct, Hex
 * UUID: New UUID, Remove dash in UUID, Format UUID with dash
+* Naming: Camel, Snake, Pascal, Kebab
 
 &nbsp;
 
