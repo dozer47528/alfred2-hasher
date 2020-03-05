@@ -1,7 +1,11 @@
 from workflow.workflow import Item
 
 
+# noinspection PyClassHasNoInit
 class BaseModel:
+    name = None
+    desc = None
+
     def autocomplete(self, query):
         item = Item(title=self.desc, autocomplete=self.name + ' ', icon=self.icon_path())
 

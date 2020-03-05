@@ -10,9 +10,9 @@ class Number(BaseModel):
     def convert(self, query):
         result = []
 
-        decSource = None
+        dec_source = None
         try:
-            decSource = int(query)
+            dec_source = int(query)
         except ValueError:
             pass
 
@@ -49,25 +49,25 @@ class Number(BaseModel):
         except ValueError:
             pass
 
-        if decSource:
+        if dec_source:
             result.append(Item(
                 title=u'Dec to Hex' + ': ' + query,
-                subtitle=hex(decSource),
-                arg=self.name + u'-dec2hex:' + hex(decSource),
+                subtitle=hex(dec_source),
+                arg=self.name + u'-dec2hex:' + hex(dec_source),
                 valid=True,
                 icon=self.icon_path()
             ))
             result.append(Item(
                 title=u'Dec to Bin' + ': ' + query,
-                subtitle=bin(decSource),
-                arg=self.name + u'-dec2bin:' + bin(decSource),
+                subtitle=bin(dec_source),
+                arg=self.name + u'-dec2bin:' + bin(dec_source),
                 valid=True,
                 icon=self.icon_path()
             ))
             result.append(Item(
                 title=u'Dec to Oct' + ': ' + query,
-                subtitle=oct(decSource),
-                arg=self.name + u'-dec2oct:' + oct(decSource),
+                subtitle=oct(dec_source),
+                arg=self.name + u'-dec2oct:' + oct(dec_source),
                 valid=True,
                 icon=self.icon_path()
             ))

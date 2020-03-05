@@ -12,7 +12,7 @@ class DateTime(BaseModel):
         self.name = u'datetime'
         self.desc = u'DateTime Converter'
 
-    def totimestamp(self, dt, epoch=datetime(1970, 1, 1)):
+    def to_timestamp(self, dt, epoch=datetime(1970, 1, 1)):
         td = dt - epoch
         return (td.microseconds + (td.seconds + td.days * 86400) * 10 ** 6) / 10 ** 6
 
@@ -77,7 +77,7 @@ class DateTime(BaseModel):
             else:
                 try:
                     parsed_datetime = parse(query)
-                    convert_result = str(self.totimestamp(parsed_datetime))
+                    convert_result = str(self.to_timestamp(parsed_datetime))
                     result += [
                         Item(
                             title=u'TimeStamp to DateTime to TimeStamp' + ': ' + query,
